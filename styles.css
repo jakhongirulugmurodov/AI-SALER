@@ -1,0 +1,206 @@
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(to right, #002f4b, #005f73);
+    color: white;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.broke {
+    font-size: larger;
+    font-weight: bolder;
+    color: #00a8cc;
+}
+
+.header .logo img {
+    width: 50px;
+}
+
+.header .logo h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header .nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+.header .nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.header .nav a:hover {
+    color: #00a8cc;
+    transform: scale(1.1);
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(to bottom, #005f73, #002f4b);
+    color: white;
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
+
+.hero .cta-button {
+    display: inline-block;
+    background: #00a8cc;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background 0.3s ease;
+}
+
+.hero .cta-button:hover {
+    background: #004d61;
+}
+
+/* Infographics Section */
+.infographics {
+    background: #f4f4f9;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.infographics h2 {
+    margin-bottom: 1.5rem;
+}
+
+.infographics .steps {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.infographics .step {
+    flex: 1 1 30%;
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.infographics .step:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Portfolio Section */
+.portfolio {
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.portfolio .projects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.portfolio .project {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(30% - 1rem);
+    min-width: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio .project:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Contact Section */
+.contact {
+    background: #f4f4f9;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea,
+.contact-form button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    outline: none;
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.contact-form button {
+    background: #00a8cc;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.contact-form button:hover {
+    background: #004d61;
+}
+
+/* Footer */
+.footer {
+    background: #002f4b;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
