@@ -137,6 +137,9 @@
   .progress .bar { height: 6px; background: var(--surface-2); border-radius: 999px; overflow: hidden; margin-top: 8px; }
   .progress .bar i { display: block; height: 100%; width: 30%; background: var(--accent); border-radius: 999px; }
   @media (prefers-reduced-motion: no-preference) { .progress .bar i { animation: slide 1.4s ease-in-out infinite alternate; } @keyframes slide { from { margin-left: 0 } to { margin-left: 70% } } }
+  .steps { margin: 8px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .cmd { display: flex; gap: 8px; align-items: center; margin-top: 6px; flex-wrap: wrap; }
+  .cmd code { flex: 1; min-width: 0; padding: 7px 10px; background: var(--surface-2); border-radius: 8px; overflow-x: auto; white-space: nowrap; display: block; }
   .soon { padding: 28px; text-align: center; border: 1px dashed var(--line); border-radius: 12px; color: var(--fg-muted); }
 </style>
 
@@ -386,7 +389,8 @@
       <div class="card">
         <div class="form">
           <div class="field"><label for="v_title">Video nomi</label><input id="v_title" maxlength="140"></div>
-          <div class="field"><label for="v_url">Manba havola (ixtiyoriy)</label><input id="v_url" maxlength="300" placeholder="https://youtube.com/watch?v=…"></div>
+          <div class="field"><label for="v_url">Manba havola (YouTube / Instagram)</label><input id="v_url" maxlength="300" placeholder="https://youtube.com/watch?v=…">
+            <span class="hint">Havola eslatma va transcriber buyrug'i uchun. Dastur videoni o'zi yuklab olmaydi: transkript kompyuteringizda olinadi (pastda).</span></div>
         </div>
         <div class="row" style="margin-top:10px"><button class="btn sm" type="button" id="saveMeta">Saqlash</button><span class="msg" id="metaMsg"></span><span class="grow"></span><button class="btn ghost danger sm" type="button" id="delVideo">Videoni o'chirish</button></div>
       </div>
@@ -422,6 +426,17 @@
   function renderTranscriptTab(body, v) {
     const segs = v.segments || [];
     body.innerHTML = `
+      ${segs.length ? "" : `
+      <div class="card">
+        <h3>Transkript qanday olinadi</h3>
+        <ol class="steps">
+          <li>Kompyuteringizda transcriber papkasida shu buyruqni ishga tushiring (Gemini kaliti o'rnatilgan bo'lsin):
+            <div class="cmd"><code id="tcmd" class="mono"></code><button class="btn sm" type="button" id="tcmdCopy">Nusxalash</button></div></li>
+          <li>Dastur <b>natijalar/</b> papkasiga SRT fayl chiqaradi (uzun videoda 5–15 daqiqa).</li>
+          <li>Shu SRT faylni pastda yuklang va "Transkriptni saqlash" bosing.</li>
+        </ol>
+        <p class="muted" style="margin:6px 0 0">Nega sahifa o'zi qilmaydi: Claude Artifact brauzer ichida ishlaydi, YouTube'ga chiqolmaydi va audio eshitmaydi. Transkript faqat tashqaridan keladi.</p>
+      </div>`}
       <div class="card">
         <h3>Transkript kiritish</h3>
         <p class="muted" style="margin:4px 0 10px">Transcriber chiqargan <b>SRT</b> (yoki VTT) faylni yuklang yoki matnini shu yerga qo'ying. Oddiy matn ham bo'ladi, lekin unda time-code bo'lmaydi.</p>
@@ -435,6 +450,11 @@
         <div class="stats" style="margin:6px 0 10px"><span>Segmentlar: <b>${segs.length}</b></span><span>Davomiylik: <b>${hasTimes(v) ? fmtTc(duration(v)) : "time-code yo'q"}</b></span><span>Format: <b>${esc((v.format || "txt").toUpperCase())}</b></span></div>
         <div class="seglist" id="seglist"></div>
       </div>` : ""}`;
+    if ($("tcmd")) {
+      const url = (v.url || "").trim() || "HAVOLA";
+      $("tcmd").textContent = `python transcriber.py "${url}" --format srt -o natijalar/`;
+      $("tcmdCopy").addEventListener("click", async (e) => { try { await navigator.clipboard.writeText($("tcmd").textContent); e.target.textContent = "Nusxalandi"; } catch (_) { e.target.textContent = "Qo'lda nusxalang"; } setTimeout(() => { e.target.textContent = "Nusxalash"; }, 1500); });
+    }
     $("tfile").addEventListener("change", async (e) => { const f = e.target.files[0]; if (!f) return; $("traw").value = await f.text(); });
     $("tparse").addEventListener("click", async () => {
       const msg = $("tmsg"); const { segments, format } = parseTranscript($("traw").value);
