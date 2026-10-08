@@ -33,9 +33,12 @@ Loyiha profili har bir bosqichda Claude'ga avtomatik beriladi. Siz bir marta yoz
 Har bir video loyiha ichida alohida "ish" bo'ladi va 4 bosqichdan o'tadi. Har bosqich natijasi saqlanadi va keyingi bosqichga avtomatik kiradi.
 
 ### 4.1. Transkript
-- Transkript tashqi dasturdan keladi: matn yoki SRT / VTT (time-code bilan) sifatida qo'yiladi (paste yoki fayl yuklash).
-- Dastur time-code'larni ajratib oladi va keyingi bosqichlar uchun saqlaydi.
-- Cheklov: Artifact YouTube'dan video yoki audio ololmaydi, transkript tashqaridan kelishi shart.
+- Tayyor dastur: `OscarTalim/transcriber/transcriber.py` (Python, Gemini API, yt-dlp + ffmpeg).
+  YouTube / Instagram havola yoki lokal fayldan time-code bilan SRT, VTT, TXT chiqaradi, 3–8 soniyalik segmentlar, tahrir o'tishi bilan.
+- U alohida ishlayveradi (kompyuter yoki serverda), o'zgartirilmaydi. Artifact ichida ishlamaydi: brauzer sahifasi YouTube'ga chiqolmaydi, Python va ffmpeg'ni yurgizolmaydi.
+- Dasturga natija **SRT fayl** sifatida kiritiladi (paste yoki fayl yuklash). SRT'da time-code bor, shuning uchun reels bosqichi aniq boshlanish–tugash vaqtini oladi. VTT va oddiy TXT ham qabul qilinadi.
+- Dastur SRT'ni segmentlarga (start, end, text) ajratib saqlaydi.
+- Keyinchalik (ehtiyoj bo'lsa): transcriber'ni serverda kichik xizmat qilib, Claude konnektor orqali to'g'ridan-to'g'ri ulash. Hozir shart emas.
 
 ### 4.2. Reels rejasi
 - Claude uzun transkriptdan reels uchun eng kuchli bo'laklarni tanlaydi.
@@ -76,7 +79,6 @@ Har bir video loyiha ichida alohida "ish" bo'ladi va 4 bosqichdan o'tadi. Har bo
 
 ## 8. Jarayonda hal qilinadigan savollar
 
-- Transkript dasturingiz qaysi formatda chiqaradi (oddiy matn, SRT, VTT, time-code shakli)?
 - Reels: odatda nechta va qancha davomiylikda?
 - Storyboard'da sxematik kadr yetarlimi, yoki chizilgan rasm majburiymi?
 - Animatsiya uslublari: har loyiha uchun namuna (video yoki tavsif) bormi?
